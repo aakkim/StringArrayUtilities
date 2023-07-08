@@ -1,4 +1,6 @@
 package com.zipcodewilmington;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by leon on 1/29/18.
@@ -81,15 +83,23 @@ public class StringArrayUtils {
      * @return true if each letter in the alphabet has been used in the array
      */ // TODO
     public static boolean isPangramic(String[] array) {
-        String panagram = String.join(" ", array);
-        boolean[] keepTrack = new boolean[26];
-        int index = 0;
-        for(int i=0; i<panagram.length(); i++) {
-            if(panagram.charAt(i)<'a' && panagram.charAt(i)>'z') {
-                keepTrack
+        String joinedArray = String.join(" ", array).toLowerCase();
+        boolean[] keepTrack = new boolean[26]; // default values in boolean array is false
+        int index = 0; // index of the difference between panagram.charAt(i) character and 'a' in ascii code (numeric value of letter)
+        boolean panagram = true; // return true of false if string is a panagram
+        for(int i=0; i<joinedArray.length(); i++) {
+            if(joinedArray.charAt(i)>='a' && joinedArray.charAt(i)<='z'){
+                index = joinedArray.charAt(i) - 'a'; //gets the index between charAt(i) and numeric value of 'a'/ the difference will be 0-25
+            }
+            keepTrack[index] = true; // mark as true if the character at that index exists in our string
+        }
+        for(int i=0; i<keepTrack.length; i++) { //with boolean panagram, we check to see if keepTrack array contains false
+            if(keepTrack[i]==false) {
+                panagram = false;
             }
         }
-        return true;
+
+        return panagram;
     }
 
     /**
@@ -98,7 +108,13 @@ public class StringArrayUtils {
      * @return number of occurrences the specified `value` has occurred
      */ // TODO
     public static int getNumberOfOccurrences(String[] array, String value) {
-        return 0;
+        int occurrences = 0;
+            for(int i=0; i<array.length; i++) {
+                if(array[i]==value) {
+                    occurrences += 1;
+                }
+            }
+        return occurrences;
     }
 
     /**
@@ -107,7 +123,16 @@ public class StringArrayUtils {
      * @return array with identical contents excluding values of `value`
      */ // TODO
     public static String[] removeValue(String[] array, String valueToRemove) {
-        return null;
+        String[] excludeValue = new String[array.length-1]; // an element containing 'value' is removed from new array
+        int index = 0;
+        for(int i=0; i<array.length; i++) {
+            if(!(array[i]==valueToRemove)) {
+                excludeValue[index] = array[i];
+                index ++;
+            }
+        }
+
+        return excludeValue;
     }
 
     /**
@@ -115,7 +140,22 @@ public class StringArrayUtils {
      * @return array of Strings with consecutive duplicates removes
      */ // TODO
     public static String[] removeConsecutiveDuplicates(String[] array) {
-        return null;
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(array)); //convert array to ArrayList to alter length
+        int i = 0;
+        int j = 1;
+
+        while(i<list.size()-1) {
+            if(list.get(i)==list.get(j)) {
+                list.remove(i); // if element at index i & j are equal, remove element at index i
+            } else { // if elements at index i & j are not the same, increment by one for each index to iterate through array
+                i++;
+                j++;
+            }
+        }
+        String[] removeDup = new String[list.size()]; // Create new array to store results
+        removeDup = list.toArray(removeDup); //Convert ArrayList to the new array
+
+        return removeDup;
     }
 
     /**
@@ -123,6 +163,7 @@ public class StringArrayUtils {
      * @return array of Strings with each consecutive duplicate occurrence concatenated as a single string in an array of Strings
      */ // TODO
     public static String[] packConsecutiveDuplicates(String[] array) {
+
         return null;
     }
 
