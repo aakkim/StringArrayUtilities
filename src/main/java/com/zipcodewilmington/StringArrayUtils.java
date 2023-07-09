@@ -163,8 +163,35 @@ public class StringArrayUtils {
      * @return array of Strings with each consecutive duplicate occurrence concatenated as a single string in an array of Strings
      */ // TODO
     public static String[] packConsecutiveDuplicates(String[] array) {
+        ArrayList<String> list = new ArrayList<>(); //Create an ArrayList to add concatenated duplicates, no size given
+        int i=0; //To iterate through array
+        int j=0; //To add concatenated elements to ArrayList
+        String total = ""; //To add the duplicates into one element
 
-        return null;
+        total += array[i];
+        while(i<array.length-1) {
+            if(array[i]==array[i+1]) {
+                total += array[i+1];
+                if((i+1)==array.length-1) {  //If the last char was a duplicate and was added to total, place the value into the next index of ArrayList
+                    list.add(j, total);
+                }
+            } else {
+                list.add(j, total);
+                total = array[i+1];
+                j++; //Go to next index of ArrayList
+                if((i+1)==array.length-1) {
+                    list.add(j, total); //If the last char was not a duplicate, place the value into the next index of ArrayList
+                }
+            }
+            i++; //Iterate to next index of array
+        }
+        String[] occurrencesJoined = new String[list.size()]; //Create new String array to convert ArrayList to Array
+        occurrencesJoined = list.toArray(occurrencesJoined); // Convert ArrayList to Array
+
+        System.out.println(Arrays.toString(array)); //Display String array object
+        System.out.println(Arrays.toString(occurrencesJoined)); //Display String array object
+
+        return occurrencesJoined;
     }
 
 
